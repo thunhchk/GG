@@ -1,0 +1,68 @@
+
+local library = loadstring(game:HttpGet("https://pastebin.com/raw/edJT9EGX"))() -- UI Library
+local window = library:CreateWindow("thịnh gg")
+ 
+-- Flags
+local autoBuy = false
+local autoCollect = false
+local autoFeed = false
+ 
+-- Auto Buy
+spawn(function()
+    while true do
+        wait(3)
+        if autoBuy then
+            -- Example: Buy tomato seeds (replace as needed)
+            local args = {
+                [1] = "BuyItem",
+                [2] = {["Item"] = "TomatoSeed", ["Amount"] = 1}
+            }
+            game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+        end
+    end
+end)
+ 
+-- Auto Collect
+spawn(function()
+    while true do
+        wait(2)
+        if autoCollect then
+            for _, v in pairs(workspace:GetDescendants()) do
+                if v.Name == "HarvestHitbox" then
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 1)
+                end
+            end
+        end
+    end
+end)
+ 
+-- Auto Feed Pets
+spawn(function()
+    while true do
+        wait(5)
+        if autoFeed then
+            local args = {
+                [1] = "FeedPet",
+                [2] = {["PetID"] = 1, ["Item"] = "CandyBlossom"}
+            }
+            game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+        end
+    end
+end)
+ 
+-- UI Toggles
+window:AddToggle("Auto Buy Seeds", false, function(val)
+    autoBuy = val
+end)
+ 
+window:AddToggle("Auto Collect", false, function(val)
+    autoCollect = val
+end)
+ 
+window:AddToggle("Auto Feed Pets", false, function(val)
+    autoFeed = val
+end)
+ 
+window:AddLabel("💡 Tip: Works in Grow a Garden only")
+window:AddLabel("⚙️ Created by Frag Syndicate")
